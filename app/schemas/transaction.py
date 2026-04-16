@@ -19,6 +19,13 @@ class TransactionCreate(BaseModel):
     date:        date
 
 
+class TransactionUpdate(BaseModel):
+    category_id: Optional[uuid.UUID] = None
+    description: Optional[str] = Field(default=None, min_length=1, max_length=255)
+    notes:       Optional[str] = None
+    date:        Optional[date] = None
+
+
 class TransactionResponse(BaseModel):
     id:          uuid.UUID
     user_id:     uuid.UUID

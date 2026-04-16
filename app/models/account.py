@@ -21,7 +21,7 @@ class Account(Base):
     id         = Column(UUID(as_uuid=True), primary_key=True, server_default=text("uuid_v7()"))
     user_id    = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     name       = Column(String(100), nullable=False)
-    type       = Column(Enum(AccountType), nullable=False)
+    type       = Column(Enum(AccountType, name="account_type"), nullable=False)
     balance    = Column(Numeric(18, 2), nullable=False)
     currency   = Column(String(3), nullable=False, default="USD")
     color      = Column(String(7), nullable=True)

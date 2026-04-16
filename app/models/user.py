@@ -19,7 +19,7 @@ class User(Base):
     password_hash = Column(String(255), nullable=True)
     google_id     = Column(String(255), nullable=True, unique=True)
     avatar_url    = Column(String, nullable=True)
-    provider      = Column(Enum(AuthProvider), nullable=False, default=AuthProvider.local)
+    provider      = Column(Enum(AuthProvider, name="auth_provider"), nullable=False, default=AuthProvider.local)
     is_active     = Column(Boolean, nullable=False, default=True)
     is_verified   = Column(Boolean, nullable=False, default=False)
     created_at    = Column(DateTime(timezone=True), nullable=False, server_default=text("NOW()"))

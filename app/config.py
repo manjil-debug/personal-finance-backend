@@ -17,6 +17,10 @@ class Settings(BaseSettings):
     # Database
     database_url: str
 
+    @property
+    def async_database_url(self) -> str:
+        return self.database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
     # Google OAuth
     google_client_id: str = ""
     google_client_secret: str = ""

@@ -31,5 +31,9 @@ def create_refresh_token() -> tuple[str, str]:
     return raw, hashed
 
 
+def hash_refresh_token(raw_token: str) -> str:
+    return hashlib.sha256(raw_token.encode()).hexdigest()
+
+
 def decode_access_token(token: str) -> dict:
     return jwt.decode(token, settings.secret_key, algorithms=[ALGORITHM])
