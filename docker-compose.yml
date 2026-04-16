@@ -11,3 +11,9 @@ services:
       - "8989:8000"
     command: >
       uvicorn app.main:app --host 0.0.0.0 --port 8000
+    networks:
+      - finance-bridge
+
+networks:
+  finance-bridge:
+    external: true
