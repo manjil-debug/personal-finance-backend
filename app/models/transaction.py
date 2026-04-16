@@ -18,7 +18,7 @@ class Transaction(Base):
     user_id     = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     account_id  = Column(UUID(as_uuid=True), ForeignKey("accounts.id", ondelete="CASCADE"), nullable=False)
     category_id = Column(UUID(as_uuid=True), ForeignKey("categories.id", ondelete="SET NULL"), nullable=True)
-    type        = Column(Enum(TransactionType), nullable=False)
+    type        = Column(Enum(TransactionType, name="transaction_type"), nullable=False)
     amount      = Column(Numeric(18, 2), nullable=False)
     currency    = Column(String(3), nullable=False, default="USD")
     description = Column(String(255), nullable=False)

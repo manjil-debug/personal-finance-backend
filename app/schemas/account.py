@@ -17,6 +17,13 @@ class AccountCreate(BaseModel):
     icon: Optional[str] = Field(default=None, max_length=50)
 
 
+class AccountUpdate(BaseModel):
+    name: Optional[str] = Field(default=None, min_length=1, max_length=100)
+    type: Optional[AccountType] = None
+    color: Optional[str] = Field(default=None, pattern=r"^#[0-9A-Fa-f]{6}$")
+    icon: Optional[str] = Field(default=None, max_length=50)
+
+
 class AccountResponse(BaseModel):
     id: uuid.UUID
     user_id: uuid.UUID
