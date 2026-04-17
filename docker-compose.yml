@@ -7,6 +7,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      - ALLOWED_ORIGINS=http://localhost:3000,http://192.168.1.123:3000
     ports:
       - "8989:8000"
     command: >
