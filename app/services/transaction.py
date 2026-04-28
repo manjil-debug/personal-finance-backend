@@ -134,6 +134,36 @@ class TransactionService:
             await TransactionService._validate_category(payload.category_id, current_user.id, db)
 
         update_data = payload.model_dump(exclude_unset=True)
+
+        new_type = update_data.get("type", None)
+        if new_type == TransactionType.transfer:
+            raise BadRequestException("Cannot change transaction type to transfer. Use the /transfers endpoint instead.")
+
+        new_amount = update_data.get("amount", None)
+
+        # Recalculate account balance if amount or type changed
+        if new_amount is not None or new_type is not None:
+            account = await TransactionService._get_account_for_user(
+                transaction.account_id, current_user.id, db
+            )
+
+            # Reverse the old transaction effect
+            if transaction.type == TransactionType.income:
+                account.balance -= transaction.amount
+            elif transaction.type == TransactionType.expense:
+                account.balance += transaction.amount
+
+            effective_type = new_type or transaction.type
+            effective_amount = new_amount if new_amount is not None else transaction.amount
+
+            # Apply the new transaction effect
+            if effective_type == TransactionType.income:
+                account.balance += effective_amount
+            elif effective_type == TransactionType.expense:
+                if account.balance - effective_amount < 0:
+                    raise UnprocessableException("Insufficient balance for this transaction")
+                account.balance -= effective_amount
+
         for field, value in update_data.items():
             setattr(transaction, field, value)
 

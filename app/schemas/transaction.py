@@ -21,6 +21,8 @@ class TransactionCreate(BaseModel):
 
 class TransactionUpdate(BaseModel):
     category_id: Optional[uuid.UUID] = None
+    type:        Optional[TransactionType] = None
+    amount:      Optional[Decimal] = Field(default=None, gt=0, description="Must be a positive value")
     description: Optional[str] = Field(default=None, min_length=1, max_length=255)
     notes:       Optional[str] = None
     date:        Optional[date] = None
