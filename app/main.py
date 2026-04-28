@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.core.error_handler import register_exception_handlers
 from app.database import dispose_engine
-from app.routers import auth, accounts, budgets, categories, transactions, transfers, users
+from app.routers import auth, accounts, budgets, categories, dashboard, transactions, transfers, users
 
 
 @asynccontextmanager
@@ -34,6 +34,7 @@ app.include_router(categories.router, prefix="/api/v1")
 app.include_router(transactions.router, prefix="/api/v1")
 app.include_router(transfers.router, prefix="/api/v1")
 app.include_router(budgets.router, prefix="/api/v1")
+app.include_router(dashboard.router, prefix="/api/v1")
 
 
 @app.get("/health", tags=["Health"])
